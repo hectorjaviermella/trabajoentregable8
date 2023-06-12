@@ -3,8 +3,8 @@ import  ProductsService  from "../services/products.service.js";
 import { generateProducts } from "../utils.js";
 
 import CustomError from "../services/errors/CustomError.js";
-import {EErrors} from "../services/errors/enum.js";
-import { generateUserErrorInfo } from "../services/errors/info.js";
+import ErrorCode from "../services/errors/enum.js";
+import { addProductErrorInfo,CartErrorInfo } from "../services/errors/info.js";
 
 
 const productsService = new ProductsService();
@@ -57,31 +57,40 @@ export  async function addProduct(req, res) {
    console.log("entro al procuts.controler al addproduct"); 
    
    const productox = req.body;
-   const producto = JSON.stringify(productox);
-   console.log("productoxxx" +  producto);
+      
 
     let { pTitle, pDescription, pCode, pPrice, pStatus, pStock, pCategory } = req.body;  
 
     if (!pTitle || !pDescription || !pCode || !pPrice || !pStatus || !pStock || !pCategory ) {
       // return res.status(400).send({ status: "Error", error: "Incomplete campos" });
-  console.log("productoxxx " +  producto);
 
-                 CustomError.createError({
-                  name: "Product errorsss",
-                  cause: generateUserErrorInfo({
-                    pTitle : producto.pTitle,
-                    pDescription: producto.pDescription,
-                    pCode : producto.pCode ,
-                    pPrice : producto.pPrice,
-                    pStatus : producto.pStatus,
-                    pStock : producto.pStock,
-                    pCategory: producto.pCategory,
-                  }),
-                  message: "Error trying to create a Product",
-                  code: EErrors.INVALID_TYPES_ERROR,
-                });
-            //  return  CustomError;
-               
+
+            const error = CustomError.createError({
+              name: "Add product error",
+              cause: addProductErrorInfo({
+                pTitle : productox.pTitle,
+                    pDescription: productox.pDescription,
+                    pCode : productox.pCode ,
+                    pPrice : productox.pPrice,
+                    pStatus : productox.pStatus,
+                    pStock : productox.pStock,
+                    pCategory: productox.pCategory,
+              }),
+            
+              message: "Error trying to create new product"+" "+"because"+" "+addProductErrorInfo({
+                pTitle : productox.pTitle,
+                pDescription: productox.pDescription,
+                pCode : productox.pCode ,
+                pPrice : productox.pPrice,
+                pStatus : productox.pStatus,
+                pStock : productox.pStock,
+                pCategory: productox.pCategory,
+              }),
+              code: ErrorCode.MISSING_DATA_ERROR,
+    
+            });
+            console.log(error.message);
+            return res.status(400).send({ status: "Error", error: error.message });
       };
 
 

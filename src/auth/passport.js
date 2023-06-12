@@ -8,6 +8,10 @@ import { createHash, isValidPassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
 import config from "../config.js";
 
+import CustomError from "../services/errors/CustomError.js";
+import ErrorCode from "../services/errors/enum.js";
+import { addProductErrorInfo,CartErrorInfo,authenticationErrorInfo } from "../services/errors/info.js";
+
 const { clientID, clientSecret, callbackUrl } = config;
 
 const LocalStrategy = local.Strategy;
@@ -69,10 +73,18 @@ const initializePassport = () => {
           const user = await userModel.findOne({ email: username }).lean();
           if (!user) return done(null, false);
 
-          if (!isValidPassword(user, password)) 
-              return done(null, false); //contrasena incorrecta
-
-              //
+          if (!isValidPassword(user, password)) {
+            const error = CustomError.createError({
+              name: "Authentication error",
+              cause: authenticationErrorInfo(),
+              message: "Error authenticating password",
+              code: ErrorCode.AUTHENTICATION_ERROR,
+              status: 401,
+            });
+             console.log(error.message);
+             return done(null, false); //contrasena incorrecta
+             // return done(error.message,false);
+            }
           delete user.password;
 
           if (user.email ==="adminCoder@coder.com")

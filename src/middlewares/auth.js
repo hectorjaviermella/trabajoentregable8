@@ -1,8 +1,29 @@
-
+/*
   function checkLogin(req, res, next) {
     if (!req.session.user) return res.redirect("/login");
     next();
   }
+*/
+function checkLogin(req, res, next) {
+  console.log("entro al checklogin");
+  if (!req.session.user.email || !req.session.user.password) {
+    const error = CustomError.createError({
+      name: "Authentication error",
+      cause: authenticationErrorInfo(),
+      message: "Error authenticating user",
+      code: ErrorCode.AUTHENTICATION_ERROR,
+      status: 401,
+    });
+    console.log(error);
+    return next(error);
+  }
+  if (!req.session.user) {
+    return res.redirect("/login");
+
+  }
+  next();
+}
+
   
   function checkLogged(req, res, next) {
     if (req.session.user) return res.redirect("/login");
@@ -20,8 +41,7 @@
     if (req.session.user.role==="user")
     { 
       console.log("Acceso no autorizado, es solo para administradores");
-      return res.status(401).send({status: "'Acceso no autorizado'"})
-      res.status(401).json({ error: 'Acceso no autorizado' });
+      return res.status(401).send({ status: 'Error', error: "You cannot access to this place" });
     }
 else
     {   
@@ -39,8 +59,7 @@ else
          
          { 
           console.log("Acceso no autorizado, es solo para usuarios");
-          return res.status(401).send({status: "'Acceso no autorizado'"})
-          res.status(401).json({ error: 'Acceso no autorizado' });
+          return res.status(401).send({ status: 'Error', error: "You cannot access to this place" });
         }
     else
         {   
