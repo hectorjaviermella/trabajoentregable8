@@ -1,6 +1,7 @@
 import  CartsService from "../services/carts.service.js";
 import  TicketService from "../services/tickets.service.js";
 import UserDTO from "../daos/dtos/user.dto.js";
+import TicketDTO from "../daos/dtos/ticket.dto.js";
 
 
 import { productRepository } from "../repositories/index.js";
@@ -88,16 +89,13 @@ export async function getCartsById(req, res) {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 export async function ticket(req,res){
-  const { cid }=req.params
-  console.log("ticket de view.controller.js" );
-  //const ticketFinal= await ticketService.createTickettoCart(cid)
-  const ticketFinal= await ticketService.createTicket(cid)
+  const { cId } = req.params; 
 
-  res.render("ticket", { ticket: ticketFinal });
-  /*
-  res.render("ticket",{
-    ticketFinal: JSON.parse(JSON.stringify(ticketFinal)),
-    user: req.session.user
-  })*/
+const ticket= await ticketService.createTicket(cId);
+
+  console.log("ticket ", ticket );
+  const ticketToSave = new TicketDTO(ticket);
+  res.render("ticket",  { ticket: ticketToSave});
+ 
 
 }

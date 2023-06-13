@@ -6,50 +6,33 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" id="home">Home</a>
+          <a class="nav-link active" aria-current="page" href="/products">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/current">Current</a>
         </li>
       </ul>
-      <div><button id="logout">Log out</button></div>
+      </ul>
+      <div><button id="logout">Logout</button></div>
     </div>
   </div>
 </nav>
 
 
 <div id="app">
-    <h1 id="productId">Ticket with the ID:  {{ticket.code}}  </h1>
-  
+    <h1 id="productId">Ticket with the id:   {{ticket._id}}  </h1>
+    <p>Code: {{ticket.code}}</p>
+    <p>Amount $: {{ticket.amount}}</p>
+    <p>Purcharser: {{ticket.purcharser}}</p>
+    <p>Purchase_datetime: {{ticket.purchase_datetime}}</p>    
 
-    <!--div id="productDetail" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div id="product-{{ticket._id}}" class="max-w-sm border rounded-lg shadow bg-gray-800 border-gray-700 m-1">
-            <div>
-                {{#each ticket.arrayproductscomprados}}
-                <img src="{{this}}" alt="product image" />
-                {{/each}}
-            </div>
-            <div>
-                <h5 id="code"> code: {{ticket.code}}</h5>
-               
-                <p>Amount $:
-                    {{ticket.amount}}</p>
-                <p>Purcharser:
-                    {{ticket.purcharser}}</p>
-                <p>Purchase_datetime:
-                    {{ticket.purchase_datetime}}</p>
-               
+    <p>Elementos comprados: {{ticket.arrayproductscomprados}}</p>    
+    <p>Elementos no comprados: {{ticket.arrayproductsnocomprados}}</p>    
+    
+   
 
-                    
-                   
-
-                    <div>
-                         <label for="cid">Cart ID</label>
-                        <input placeholder=" " type="text" name="cid" id="cid" value={{cId}}  disabled/>
-                         <button id="botonForm">Add to Cart </button>
-                    </div>
-           
-            </div>
-        </div>
-    </div-->
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

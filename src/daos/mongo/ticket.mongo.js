@@ -11,9 +11,13 @@ class Ticket {
   };
 
   getTicketsById = async (id) => {
+    try {
     console.log("entra al ticket.model");
     const user = await userModel.findOne(id).lean();
     return user;
+  } catch (error) {
+    console.log(error);
+  }
   };
 
   createTicket = async (ticket) => {

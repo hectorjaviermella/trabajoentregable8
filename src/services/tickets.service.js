@@ -131,23 +131,20 @@ async deleteTicket(tId) {
                   .status(400)
                   .send({ status: "error", message: "Error to create ticket",payload: error });
               }else{
-                console.log("tendria que devolver resultado", createTicket);
-                 return createTicket;
-               // return res.send({ status: "success", message: "ticket created", payload: createdTicket});
-                //res.render("ticket");
-               // console.log("XXXXXXXXXXXXX antes del render" , createdTicket);
-               // res.render("ticket", { ticket: createdTicket });
+                console.log("tendria que devolver resultado", createdTicket);
+                 return createdTicket;
+              
               }
 
 
-              //return res.send({ status: "success", message: "ticket created", payload: createdTicket});
-              
+             
                                 }else{
                              return res.send({ status: "error", message: "Do not ticket created", payload: error});
               
                                 }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+       return error;
+    
     }
 };
 ////////////////////////////////////////////////////////////////////////

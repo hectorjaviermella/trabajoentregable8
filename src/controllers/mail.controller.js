@@ -3,11 +3,12 @@ import __dirname from "../utils.js";
 import configMailSms from "../configmailsms.js";
 
 console.log("entro  mail.controllers");
+/////////////////////////////////////////////////////////////////////////////
 const {
     nodemailerConfig: { service, port, user, password,mail_receptor},
   } = configMailSms;
 
-
+//////////////////////////////////////////////////////////////
 
 const transport = nodemailer.createTransport({
     service: service,
@@ -20,7 +21,7 @@ const transport = nodemailer.createTransport({
         rejectUnauthorized: false
     }
 });
-
+/////////////////////////////////////////////////////////////////////
 export async function sendEmail(req,res){
     try {
    
@@ -40,7 +41,7 @@ export async function sendEmail(req,res){
         }]
     });
    
-     res.send({ status: "success", result: "mail sent" });
+ return res.send({ status: "success", result: "mail sent" });
  
    
 } catch (error) {

@@ -1,12 +1,13 @@
 var cId = document.getElementById("miInput").value;
 var Idprod = document.getElementById("Idprod").value;
 
-const ticket= document.getElementById("ticket");
+///const ticket= document.getElementById("ticket");
 const logout= document.getElementById("logout");
 const removetocart= document.getElementById("removetocart");
 
-
+/*
 console.log("ticket" , ticket);
+
 
 ticket.addEventListener("click",(e)=>{
   fetch(`/api/carts/${cId}/purchase`, {
@@ -34,7 +35,7 @@ ticket.addEventListener("click",(e)=>{
   .catch((error) => console.log(error));
 
 });
-
+*/
 
 logout.addEventListener("click",(e)=>{
   fetch(`/api/sessions/logout`, {
